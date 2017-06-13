@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Juego del Boton</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<h1>Intenta hacerle click al Boton</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3" style="border: 1px;border-style: solid;height: 500px;width: 700px">
+           <button class="btn btn-primary" style="display: none;position: absolute" id="btn">Click to win</button>
+            <span class="pull-right lead" id="time">00:00</span>
+      <span class="center-block "style="margin-top: 200px;font-size: 5em;text-align: center "id="timer">3</span>
+        </div>
+    </div>
+    </div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
+    <script>
+       var intentos=0;
+        var timer=3;
+        var seg=0;
+        var min=0;
+        setInterval(function() {
+      if(timer>1){
+          timer--;
+          $("#timer").html(timer);
+      }
+      else if(timer==1){
+          $("#timer").html("Start");
+          setTimeout(function (){
+              $("#timer").css('display','none');
+              $("#btn").css('display','block')
+              timer=0;
+
+          },1000)
+      }
+      if(timer==0) {
+          seg++;
+          if (seg > 59) {
+              min++;
+              seg = 0;
+          }
+
+
+          if(seg < 10) {
+              var seconds = "0"+seg;
+          }else{
+              var seconds = seg;
+          }
+          if(min<10){
+              var minutes="0"+min;
+          }else{
+              var minutes=min;
+          }
+          $("#time").html(min+ ":" +seconds);
+      }
+        },1000);
+        $("#btn").hover(function (){
+            $(this).css('margin-top',Math.trunc(Math.random()*450)).css('margin-left',Math.trunc(Math.random()*650))
+             intentos++;
+            if(intentos==20){
+                alert("Lo estas intentando al menos?");
+
+            }  if(intentos==40){
+                alert("Mi abuelita ya lo hubiera hecho");
+
+            }
+            })
+    </script>
+</body>
+</html>
+
+//routes
+router.get('/boton', function(req, res, next) {
+    res.render('prat', { title: 'Express' });
+});
